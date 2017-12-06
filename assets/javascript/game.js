@@ -7,7 +7,8 @@
       var winCounter = 0;
       var losesCounter = 0;
       var guessesLeftCounter = 10;
-      var guessesDisplay = 0;
+      var guessesDisplay = "";
+
 
       //This is for the letters the computer will use
       var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -39,6 +40,11 @@
           winCounter++;
           //make the wins html text stay intackt and numbercal value be shown next to it
           document.getElementById("wins").innerHTML = winCounter;
+          randomNumber = getRandomLetter();
+      		answer = letters[Math.floor(randomNumber)];
+      			console.log(answer);
+      			guessesLeftCounter = 10;
+      			guessesDisplay = "";
         } 
 
         //if the key pushed is not the random letter the computer generated then the guesses left counter goes down by 1
@@ -46,21 +52,24 @@
           if (keyName.toLowerCase() != answer.toLowerCase()) {
           guessesLeftCounter--;
           document.getElementById("guessesLeft").innerHTML = guessesLeftCounter;
+          	if (guessesLeftCounter == 0) {
+          		losesCounter++;
+          		document.getElementById("loses").innerHTML = losesCounter;
+          		randomNumber = getRandomLetter();
+      			answer = letters[Math.floor(randomNumber)];
+      			console.log(answer);
+      			guessesLeftCounter = 10;
+      			guessesDisplay = "";
+          	}
           }
         
-      
-
-        //if the key pushed is not equal to the random letter generated then make the loses counter go up by 1
-        var keyName = event.key;
-          if (keyName.toLowerCase() != answer.toLowerCase()) {
-          losesCounter++;
-          document.getElementById("loses").innerHTML = losesCounter;
-          } 
         
         //if the key pushed is not equal to the random letter generated display that letter next to the guesses html
         var keyName = event.key;
          if (keyName.toLowerCase() != answer.toLowerCase()) {
-          document.getElementById("guesses").innerHTML = keyName;
+         	guessesDisplay = guessesDisplay + keyName + " , ";
+          document.getElementById("guesses").innerHTML = guessesDisplay;
+
 
         }
 
